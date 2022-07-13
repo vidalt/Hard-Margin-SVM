@@ -3,20 +3,27 @@
 
 This is the repository for [Support Vector Machines with the Hard-Margin Loss: Optimal Training via Combinatorial Benders' Cuts]().
 
+
+## Reported results
+
+The interested reader can check all results of the paper in ***Experiments/Reported-results.xlsx***.
+
+
 ## Requirements
 
-The source-code is working on MacOS 11.6 using ***Clang++ 11.x.x*** and  Ubuntu 20.x using ***C++ 9.x.x***.
-In both versions, ***CPLEX_Studio1210*** is used in the experiments and defined in the makefile. Preliminary tests on ***CPLEX_Studio20*** worked fine as well.
+The source-code is working on MacOS 11.6 using ***Clang++ 11.x.x*** and Ubuntu 20.x using ***C++ 9.x.x***. 
+For both systems, ***CPLEX_Studio1210*** is used in the experiments and already set in the makefile. 
 
 To compile on Ubuntu, you just need to enter **Program/** folder and run:
 `make`
 
-For running on MacOSX, you must include myOS parameter as argument in the makefile, so it can compile the code using the right CPLEX root folder. Check it below:
+For running on MacOSX, you must include myOS parameter as argument in the makefile, so it can compile the code using the correct CPLEX root folder. Check it below:
 `make myOS=MacOSX` 
 
-#### Corner case
-* In case you have a different version than CPLEX_Studio1210, you may execute
-`make CPLEXVERSION=CPLEX_Studio@@@` where @@@ refers to the complement of CPLEX_Studio in the folder name. It is also valid f
+#### Working on different CPLEX versions
+In case you have a different version than CPLEX_Studio1210, you may execute
+`make CPLEXVERSION=CPLEX_Studio@@@` where @@@ refers to the suffix of 'CPLEX_Studio' in the folder name. As an example, **CPLEX_Studio201** is the folder name for CPLEX 20.10, requiring `make CPLEXVERSION=CPLEX_Studio201` to correctly compile the code.
+Our makefile is a friendly text file, which does not require much effort in adapting it to any CPLEX_Studio version. 
 
 ## Running the algorithm
 
@@ -28,7 +35,7 @@ Available options:
 -instanceFormat				Input format to read instances (only 2);
 -timeProportionCBCuts  		Proportion of time used to generate CB cuts (Step #1);
 -timeProportionSampling 	Proportion of time related to timeProportionCBCuts to generate CB cuts in the sampling phase;
--maxCBCuts 					Maximum number of CB cuts to generate. (-1 for limitless);
+-maxCBCuts 					Bounds the number of CB cuts to generate. (-1 for limitless);
 -problem 					Set the problem type for solving. (default HARD_IP SVM with hard-margin loss). Available options {FIRST_CB_THEN_HARD_IP SVM with hard-margin loss only CB cuts from the whole model,SAMPLING_CB_HARD_IP = SVM with hard-margin loss with CB from whole model and sampling, HARD_IP = SVM with hard-margin loss, SOFT_HL = SVM with hinge loss,HARD = classic SVM (only feasible if data is linearly separable)};
 -pen 						Penalty factor in the objective function, i.e., C value (default 1.0).
 -timeBudget 				Maximum of running time (-1 for limitless)
@@ -58,18 +65,6 @@ Check `basic.sh` within ***Experiments/*** folder for a working example on all i
 
 Run `paper.sh` within ***Experiments/*** folder for the script to reproduce all experiments of the paper.
 
-
-
 ## References
 
 [1]  J.P. Brooks, Support vector machines with the ramp loss and the hard margin loss, Oper. Res. 59 (2011) 467–479. https://doi.org/10.1287/opre.1100.0854.
-
-## License 
-
-[![License](http://img.shields.io/:license-mit-blue.svg?style=flat-square)](http://badges.mit-license.org)
-
-  
-
--  **[MIT license](http://opensource.org/licenses/mit-license.php)**
-
-- Copyright(c) 2022 Ítalo Santana
