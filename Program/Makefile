@@ -71,3 +71,6 @@ clean: cleanlibsvm
 
 cleanlibsvm:
 	cd libsvm-3.24 && make clean
+
+test: clean all
+	./svm-nonconvex ../Datasets/Brooks_SVM_Data/n60d2ATj0 -instanceFormat 2 -problem SAMPLING_CB_HARD_IP -pen 1 -timeBudget 30 -seed 1 -timeProportionCBCuts 0.2 -timeProportionSampling 0.5 -maxCBCuts -1
