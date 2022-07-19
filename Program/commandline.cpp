@@ -44,14 +44,14 @@ commandline::commandline(int argc, char *argv[])
 	this->penaltyC = 1.0;
 	this->nbThreads = 1;
 	this->timeBudget = -1;
-	this->instanceFormat = 1;
+	this->instanceFormat = 2;
 	this->seed = 1;
 	this->samplingSize = -1;
 	this->nbSamplingIterations = -1;
 	this->maxCBCuts = -1;
 	this->timeProportionCBCuts = 0.2;
 	this->timeProportionIDR = 0.0;
-	this->timeProportionSampling = 1.0;
+	this->timeProportionSampling = 0.5;
 	this->locallyValidImpliedBounds = 3;
 
 	string strProblemType;
