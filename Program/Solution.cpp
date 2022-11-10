@@ -155,3 +155,60 @@ void Solution::exportSolution()
 	if (myData->nbFeatures == 2)
 		cout << "Solution exported, with Gnuplot installed, click on [plotSolution.plt] to print" << endl;
 }
+
+bool Solution::predictClass(vector<double> sample_coordinates, int sample_class)
+{
+	double distance = 0.0;
+	for (int j = 0; j < myData->nbFeatures; j++)
+		distance += solW[j] * sample_coordinates[j];
+	distance = sample_class * (distance + solB) - 1.0;
+	bool isClassified = (distance > MY_EPSILON_e7);
+	return isClassified;
+}
+
+
+void Solution::displayAccuracy()
+{
+	if(myData->pathToInstance.find("Brooks_SVM_Data/") != string::npos)
+	{
+		if(myData->nbFeatures == 2)
+			myData->pathToTestInstance = "../Datasets/Brooks_SVM_Data/n1e+05d2test";
+		else if(myData->nbFeatures == 5)
+			myData->pathToTestInstance = "../Datasets/Brooks_SVM_Data/n1e+05d5test";
+		else
+			myData->pathToTestInstance = "../Datasets/Brooks_SVM_Data/n1e+05d10test";
+	} 
+	else if(myData->pathToInstance.find("Brooks_RealWorldData/") != string::npos)
+	{
+		int pos = myData->pathToInstance.find(".train", 0);
+		myData->pathToTestInstance = myData->pathToInstance.substr(0,pos)  + ".test";
+	}
+
+	std::cout << "Test instance file: " << myData->pathToTestInstance << std::endl;
+	
+	std::ifstream testInstance(myData->pathToTestInstance);
+	int sample_class;
+	
+	double sample_coordinate;
+	vector<double> sample_coordinates = vector<double>(myData->nbFeatures,0.0);
+	int n_predictions = 0, n_correct_predictions = 0;
+	while (!testInstance.eof())
+	{
+		testInstance >> sample_class;
+		for (int i = 0; i < myData->nbFeatures ; i++)
+		{
+			testInstance >> sample_coordinate;
+			sample_coordinates[i] = sample_coordinate;
+		}
+		if(testInstance.eof())
+			break;
+
+		if (predictClass(sample_coordinates,sample_class))
+			n_correct_predictions++;
+		n_predictions++;
+		
+	}
+	
+	this->accuracy = 100.0*(n_correct_predictions/(1.0 * n_predictions));
+	std::cout << "Accuracy: " << this->accuracy <<  " %" << std::endl;
+}

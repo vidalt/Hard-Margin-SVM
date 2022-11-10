@@ -141,6 +141,9 @@ public:
     // All generated combinatorial in sampling phase cuts will be here
     std::map<set<int>, bool> map_sampling_CB_CUTS;
 
+    // Problem type in string format
+    string pathToTestInstance;
+
     // Normalizing the dataset by substracting the mean and dividing by the standard deviation
     void computeNormalizedSamples(vector<vector<double>> &samplesTemp);
 

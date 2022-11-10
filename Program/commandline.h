@@ -58,6 +58,9 @@ private:
 	// timeProportionSampling
 	double timeProportionSampling;
 
+	// path to test samples
+	string pathToTestInstance;
+
 	// set the solver type
 	int set_problem_type(string to_parse);
 
@@ -118,6 +121,7 @@ public:
 
 	// getter for locallyValidImpliedBounds
 	double get_timeProportionSampling();
+
 };
 
 #endif

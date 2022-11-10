@@ -12,6 +12,8 @@ int commandline::set_problem_type(string to_parse)
 		problemType = SAMPLING_CB_HARD_IP;
 	else if (to_parse == "FIRST_CB_THEN_HARD_IP")
 		problemType = FIRST_CB_THEN_HARD_IP;
+	else if (to_parse == "SOFT_LIBSVM")
+		problemType = SOFT_LIBSVM;
 	else
 		return -1; // problem
 
@@ -53,10 +55,11 @@ commandline::commandline(int argc, char *argv[])
 	this->timeProportionIDR = 0.0;
 	this->timeProportionSampling = 0.5;
 	this->locallyValidImpliedBounds = 3;
+	this->pathToTestInstance = "";
 
 	string strProblemType;
 
-	if (argc % 2 != 0 || argc > 38 || argc < 2)
+	if (argc % 2 != 0 || argc > 40 || argc < 2)
 	{
 		cout << "ERROR: invalid command line" << endl;
 		cout << "USAGE: ./executable path_to_instance [-problem solver_type] [-pen penaltyC] [-nbThreads threadsCPLEX] [-timeBudget timeBudgetForCPLEX] " << endl;

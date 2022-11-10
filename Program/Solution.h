@@ -17,6 +17,9 @@ public:
     // solution value (from CPLEX)
     double solValue;
 
+    // accuracy 
+    double accuracy;
+
     // lower bound value (from CPLEX)
     double lowerBoundValue;
 
@@ -47,6 +50,12 @@ public:
 
     // Method to copy (This can be improved making more general by static function)
     void copyToMe(Solution *&sol);
+
+    // execute and show accuracy value
+    void displayAccuracy();
+
+    // predict and return True if True Positive or True Negative. False, otherwise.
+    bool predictClass(vector<double> sample_coordinates, int sample_class);
 
     // Destructor
     ~Solution(void);

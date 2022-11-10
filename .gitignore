@@ -553,3 +553,4 @@ Datasets/instance_generator/instance_converter/.ipynb_checkpoints/*
 Program/libsvm-3.24/svm-predict
 Program/libsvm-3.24/svm-scale
 Program/libsvm-3.24/svm-train
+Program/test_accuracy

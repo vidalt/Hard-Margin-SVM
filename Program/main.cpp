@@ -38,7 +38,7 @@ int main(int argc, char *argv[])
 		mySolution = new Solution(myData);
 
 		// Create the solver data structures
-		if (myData->problemType == HARD_IP || myData->problemType == SOFT_HL)
+		if (myData->problemType == HARD_IP || myData->problemType == SOFT_HL || myData->problemType == SOFT_LIBSVM)
 			mySolver = new Solver_Primal(myData, mySolution, isDisplay);
 		else if (myData->problemType == SAMPLING_CB_HARD_IP)
 			mySolver = new Solver_Sampling(myData, mySolution, isDisplay);
@@ -48,6 +48,10 @@ int main(int argc, char *argv[])
 
 		// End of clock
 		myData->time_EndComput = clock();
+
+		// get accuracy
+		mySolution->displayAccuracy();
+
 		// Export and print the solution in case of 2D features
 		mySolution->displaySolution();
 
@@ -109,6 +113,9 @@ void lastLineCSVFormat(Pb_Data *myData, Solution *mySolution, Solver *mySolver)
 
 	headerCSV += "elapsed-time-sampling,";
 	dataCSV += to_string(myData->time_totalSampling) + ",";
+
+	headerCSV += "accuracy";
+	dataCSV += to_string(mySolution->accuracy) + ",";
 
 	cout << "Output statistics: " << endl
 		 << headerCSV << endl
