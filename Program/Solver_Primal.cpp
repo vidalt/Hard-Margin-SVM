@@ -49,13 +49,13 @@ int Solver_Primal::solveLibSVM()
 	//set all default parameters for param struct
 	param.svm_type = C_SVC;
 	param.kernel_type = LINEAR;
-	param.degree = 3;			// Default is OK
-	param.gamma = 0;			// 1/num_features - Default is OK
+	param.degree = 1;			// Default is OK
+	param.gamma = 1/myData->nbFeatures;			// 1/num_features - Default is OK
 	param.coef0 = 0;			// Default is OK
 	param.nu = 0.5;				// Default is OK
 	param.cache_size = 100;		// Default is OK
 	param.C = myData->penaltyC; // Input by our program
-	param.eps = 1e-5;			// Default is 1e-3
+	param.eps = 1e-3;			// Default is 1e-3
 	param.p = 0.1;				// Default is OK
 	param.shrinking = 0;		// Default is 1.
 	param.probability = 0;		// Default is OK

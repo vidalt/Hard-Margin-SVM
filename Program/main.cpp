@@ -55,7 +55,7 @@ int main(int argc, char *argv[])
 		// Export and print the solution in case of 2D features
 		mySolution->displaySolution();
 
-		// mySolution->exportSolution() ;
+		mySolution->exportSolution() ;
 
 		cout << "END OF ALGORITHM, TIME: " << (((double)(myData->time_EndComput - myData->time_StartComput)) / CLOCKS_PER_SEC) << endl;
 		lastLineCSVFormat(myData, mySolution, mySolver);

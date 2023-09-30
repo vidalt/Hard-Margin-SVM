@@ -31,10 +31,10 @@ bool predictClass(vector<double> sample_coordinates, int sample_class)
 {
 	double distance = 0.0;
 	int j = 0;
-	for (; j < nbFeatures - 1; j++)
+	for (; j < nbFeatures; j++)
 		distance += solW[j] * sample_coordinates[j];
 	distance = sample_class * (distance + solB) - 1.0;
-	bool isClassified = (distance > MY_EPSILON_e7);
+	bool isClassified = (distance >= -MY_EPSILON_e7);
 	return isClassified;
 }
 
