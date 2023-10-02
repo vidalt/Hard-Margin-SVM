@@ -127,11 +127,11 @@ Pb_Data::Pb_Data(string pathToInstance, ProblemType problemType, double penaltyC
 
 		this->outputIdentifier = "_" + instance_name;
 		this->outputIdentifier += "_problemType" + strProblemType;
+		this->outputIdentifier += "_CB" + to_string(timeProportionCBCuts).substr(0,4);
+		this->outputIdentifier += "_Sampling" + to_string(timeProportionSampling).substr(0,4);
 		this->outputIdentifier += "_timeBudget" + to_string(timeBudget);
 		this->outputIdentifier += "_seed" + to_string(seed);
 		this->outputIdentifier += "_C" + to_string((int)penaltyC);
-		this->outputIdentifier += "_maxCB" + to_string(maxCBCuts);
-
 		cout << "this->outputIdentifier: " << this->outputIdentifier << endl;
 	}
 	else

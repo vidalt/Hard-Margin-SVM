@@ -8,6 +8,40 @@
 
 using namespace std;
 
+
+struct MYCBstr
+{
+    Pb_Data *myData;
+    int count;
+    CPXENVptr envCB;
+    clock_t startTime;
+    vector<bool> isSampleConsidered;
+    double solutionHLvalue;
+	ofstream overtimeSolutions;
+};
+typedef struct MYCBstr MYCB, *MYCBptr;
+
+
+static int CPXPUBLIC callback_check_new_incumbent(CPXCENVptr env,
+           void *cbdata,
+           int wherefrom,
+           void *cbhandle,
+           double objval,
+           double *x,
+           int *isfeas_p,
+           int *useraction_p)
+{
+	*useraction_p = CPX_CALLBACK_DEFAULT;
+	MYCBptr mycbinfo = (MYCBptr)cbhandle;
+
+	for (int i = mycbinfo->myData->nbSamples; i < mycbinfo->myData->nbSamples + mycbinfo->myData->nbFeatures + 1; i++)
+		mycbinfo->overtimeSolutions << x[i] << " ";
+
+	double elapsedTime = (((double)(clock() - mycbinfo->startTime)) / CLOCKS_PER_SEC);
+	mycbinfo->overtimeSolutions << elapsedTime << "\n";
+	return 0;
+}
+
 class Solver
 {
 

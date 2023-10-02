@@ -111,7 +111,7 @@ public:
     // Max number of cb cuts when the solution is fractional
     int maxCBCuts;
 
-    // timeProportionIDR: 0.5 = Half of the total time for IDR
+    // timeProportionIDR: 0.5 = Half of the total time for IDR (iterative domain reduction)
     double timeProportionIDR;
 
     // timeProportionCBCuts: 0.2 = One third of the total for CB

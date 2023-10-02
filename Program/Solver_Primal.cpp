@@ -275,6 +275,16 @@ int Solver_Primal::solve()
 		CPXsetintparam(env, CPX_PARAM_THREADS, myData->nbThreads);								// number of threads
 		CPXsetintparam(env, CPXPARAM_MIP_Cuts_LocalImplied, myData->locallyValidImpliedBounds); // aggressive setting for separating local implied bound cuts [Belotti et al. 2016]
 
+		MYCB info;
+		info.myData = myData;
+		info.startTime = clock();
+		
+		if (myData->problemType == HARD_IP)
+		{
+			info.overtimeSolutions.open("overtime-solutions" + myData->outputIdentifier + ".txt");
+			status = CPXsetincumbentcallbackfunc(env, callback_check_new_incumbent, &info);
+		}
+
 		// sets time limit for the solver.
 		if (myData->timeBudget > 0)
 			CPXsetdblparam(env, CPX_PARAM_TILIM, myData->timeBudget);
@@ -429,6 +439,9 @@ int Solver_Primal::solve()
 
 		status = CPXfreeprob(env, &lp);
 		status = CPXcloseCPLEX(&env);
+		
+		if (myData->problemType == HARD_IP)
+			info.overtimeSolutions.close();
 		return returnStatus;
 	}
 }

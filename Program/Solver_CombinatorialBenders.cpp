@@ -4,16 +4,6 @@
 #define ALLOW_QC_SLAVE 0
 #define ALLOW_SAMPLING_CUTS_TO_CONSTR_SVM 1
 
-struct MYCBstr
-{
-    Pb_Data *myData;
-    int count;
-    CPXENVptr envCB;
-    clock_t startTime;
-    vector<bool> isSampleConsidered;
-    double solutionHLvalue;
-};
-typedef struct MYCBstr MYCB, *MYCBptr;
 
 static int CPXPUBLIC callback_constr_svm(CPXCENVptr env, void *cbdata, int wherefrom, void *cbhandle, int *useraction_p);
 
@@ -429,6 +419,13 @@ int Solver_CombinatorialBenders::solve()
         CPXsetintparam(env, CPX_PARAM_THREADS, myData->nbThreads);                              // number of threads
         CPXsetintparam(env, CPXPARAM_MIP_Cuts_LocalImplied, myData->locallyValidImpliedBounds); // aggressive setting for separating local implied bound cuts [Belotti et al. 2016]
 
+        MYCB info;
+		info.myData = myData;
+		info.startTime = clock();
+		info.overtimeSolutions.open("overtime-solutions" + myData->outputIdentifier + ".txt");
+		status = CPXsetincumbentcallbackfunc(env, callback_check_new_incumbent, &info);
+
+
         string str_problem_name = "SVM" + myData->outputIdentifier;
         lp = CPXcreateprob(env, &status, str_problem_name.c_str()); // Create LP problem as a container
 
@@ -652,6 +649,7 @@ int Solver_CombinatorialBenders::solve()
         delete[] lbWB;
         delete[] qsepvec;
 
+        info.overtimeSolutions.close();
         status = CPXfreeprob(env, &lp);
         status = CPXcloseCPLEX(&env);
     }

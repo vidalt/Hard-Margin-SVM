@@ -2,7 +2,7 @@
 
 clang++ ../Program/test_accuracy.cpp -o ../Program/test_accuracy
 
-algorithms=(HARD_IP SAMPLING_CB_HARD_IP_CB0.0_Sampling0.0 SAMPLING_CB_HARD_IP_CB0.1_Sampling0.5 SAMPLING_CB_HARD_IP_CB0.2_Sampling0.0 SAMPLING_CB_HARD_IP_CB0.2_Sampling0.5 SAMPLING_CB_HARD_IP_CB0.2_Sampling1.0 SAMPLING_CB_HARD_IP_CB0.4_Sampling0.5 SAMPLING_CB_HARD_IP_CB0.04_Sampling0.5 SAMPLING_CB_HARD_IP_CB0.6_Sampling0.5 SAMPLING_CB_HARD_IP_CB0.8_Sampling0.5 problemTypeSOFT_HL)
+algorithms=(HARD_IP SAMPLING_CB_HARD_IP SOFT_HL)
 
 
 for algorithm in "${algorithms[@]}"
@@ -20,11 +20,10 @@ do
     touch ${algorithm}_Brooks_SVM_Data_d2.csv
     for instance_base in "${instances_base[@]}"
     do
-        
-        array_instances=($(ls -d ../Experiments/results_extraction/${instance_base}_${algorithm}_*))
+        array_instances=($(ls -d ../Experiments/overtime-solutions_${instance_base}_problemType${algorithm}*))
         for instance in "${array_instances[@]}"
         do
-            ../Program/test_accuracy 1 ${instance} ../Datasets/Brooks_SVM_Data/n1e+05d2test >> ${algorithm}_Brooks_SVM_Data_d2.csv
+            ../Program/test_accuracy 2 ${instance} ../Datasets/Brooks_SVM_Data/n1e+05d2test >> ${algorithm}_Brooks_SVM_Data_d2.csv
         done
     done
     echo "1 - done"
@@ -40,10 +39,11 @@ do
     touch ${algorithm}_Brooks_SVM_Data_d5.csv
     for instance_base in "${instances_base[@]}"
     do
-        array_instances=($(ls -d ../Experiments/results_extraction/${instance_base}_${algorithm}_*))
+        array_instances=($(ls -d ../Experiments/overtime-solutions_${instance_base}_problemType${algorithm}*))
         for instance in "${array_instances[@]}"
-        do
-            ../Program/test_accuracy 1 ${instance} ../Datasets/Brooks_SVM_Data/n1e+05d5test >> ${algorithm}_Brooks_SVM_Data_d5.csv
+        do  
+            instance=
+            ../Program/test_accuracy 2 ${instance} ../Datasets/Brooks_SVM_Data/n1e+05d5test >> ${algorithm}_Brooks_SVM_Data_d5.csv
         done
     done
     echo "2 - done"
@@ -59,10 +59,10 @@ do
     touch ${algorithm}_Brooks_SVM_Data_d10.csv
     for instance_base in "${instances_base[@]}"
     do
-        array_instances=($(ls -d ../Experiments/results_extraction/${instance_base}_${algorithm}_*))
+        array_instances=($(ls -d ../Experiments/overtime-solutions_${instance_base}_problemType${algorithm}*))
         for instance in "${array_instances[@]}"
         do
-            ../Program/test_accuracy 1 ${instance} ../Datasets/Brooks_SVM_Data/n1e+05d10test >> ${algorithm}_Brooks_SVM_Data_d10.csv
+            ../Program/test_accuracy 2 ${instance} ../Datasets/Brooks_SVM_Data/n1e+05d10test >> ${algorithm}_Brooks_SVM_Data_d10.csv
         done
     done
     echo "3 - done"
@@ -86,7 +86,7 @@ do
         array_instances=($(ls -d ../Experiments/results_extraction/${instance_base}.train_${algorithm}_*))        
         for instance in "${array_instances[@]}"
         do
-            ../Program/test_accuracy 1 ${instance} ../Datasets/Brooks_RealWorldData/${instance_base}.test >> ${algorithm}_Brooks_RealWorldData.csv
+            ../Program/test_accuracy 2 ${instance} ../Datasets/Brooks_RealWorldData/${instance_base}.test >> ${algorithm}_Brooks_RealWorldData.csv
         done
     done
     echo "4 - done"
